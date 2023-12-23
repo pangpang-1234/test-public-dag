@@ -1,7 +1,10 @@
 from airflow import DAG
 from airflow.operators.dummy import DummyOperator
+from airflow.operators.python_operator import PythonOperator
 from datetime import datetime, timedelta
 
+def print_hello():
+      print('hello'*100)
 
 
 default_args = {
@@ -24,4 +27,8 @@ dag = DAG(
 
 start_task = DummyOperator(task_id='start_task', dag=dag)
 
-start_task
+print_hello = PythonOperator(task_id='print_hello', 
+                             python_callable= print_hello,
+                             dag=dag)
+
+start_task >> print_hello
