@@ -7,27 +7,23 @@ def print_hello():
       print('hello'*100)
 
 
-default_args = {
-    'owner': 'airflow',
-    'depends_on_past': False,
-    'start_date': datetime(2023, 1, 1),
-    'email_on_failure': False,
-    'email_on_retry': False,
-    'retries': 1,
-    'retry_delay': timedelta(minutes=1),
+default_args={
+    'owner':'Pang',
+    'retries':5,
+    'retry_delay':timedelta(minutes=10)
 }
 
-# Define the DAG
-dag = DAG(
-    dag_id = "airflow",
+with DAG(   
+    dag_id = 'airflow',
     default_args=default_args,
-    description='A simple DAG with PythonOperator',
-    schedule_interval=timedelta(days=1), 
-)
+    description = 'airflow on kube',
+    start_date=days_ago(1), # Daily run
+    schedule_interval='@once'
+    ) as dag:
 
-start_task = DummyOperator(task_id='start_task', dag=dag)
+    start_task = DummyOperator(task_id='start_task', dag=dag)
 
-print_hello = PythonOperator(task_id='print_hello', 
+    print_hello = PythonOperator(task_id='print_hello', 
                              python_callable= print_hello,
                              dag=dag)
 
