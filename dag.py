@@ -26,6 +26,7 @@ with DAG(
 
     print_hello = PythonOperator(task_id='print_hello', 
                              python_callable= print_hello,
+                             provide_context=True,
                              dag=dag)
 
 start_task >> print_hello
