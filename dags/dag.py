@@ -34,4 +34,4 @@ with DAG(
                              provide_context=True,
                              dag=dag)
 
-start_task >> connect_to_gcs >> print_hello
+start_task >> print_hello
