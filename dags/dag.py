@@ -5,8 +5,8 @@ from datetime import datetime, timedelta
 from airflow.utils.dates import days_ago
 
 def print_hello():
-      print('hello'*100)
-
+    print('hello'*100)
+    time.sleep(30)
 
 default_args={
     'owner':'Pang',
@@ -28,5 +28,10 @@ with DAG(
                              python_callable= print_hello,
                              provide_context=True,
                              dag=dag)
+    
+    connect_to_gcs = PythonOperator(task_id='connect_to_gcs', 
+                             python_callable= connect_to_gcs,
+                             provide_context=True,
+                             dag=dag)
 
-start_task >> print_hello
+start_task >> connect_to_gcs >> print_hello
