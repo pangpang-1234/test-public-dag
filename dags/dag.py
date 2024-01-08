@@ -30,10 +30,5 @@ with DAG(
                              python_callable= print_hello,
                              provide_context=True,
                              dag=dag)
-    
-    connect_to_gcs = PythonOperator(task_id='connect_to_gcs', 
-                             python_callable= connect_to_gcs,
-                             provide_context=True,
-                             dag=dag)
 
 start_task >> print_hello
