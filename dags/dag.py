@@ -3,6 +3,8 @@ from airflow.operators.dummy import DummyOperator
 from airflow.operators.python_operator import PythonOperator
 from datetime import datetime, timedelta
 from airflow.utils.dates import days_ago
+import time
+
 
 def print_hello():
     print('hello'*100)
